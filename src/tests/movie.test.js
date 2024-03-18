@@ -54,6 +54,11 @@ test('POST /movies/:id/actors debe insertar los actores', async () => {
     expect(res.body[0].firstName).toBe("Leonardo");
 });
 
+test('POST /movies/:id/actors con id incorrecto debe retornar 404', async () => {
+    const res = await request(app).post(`/movies/-1/actors`).send([]);
+    expect(res.status).toBe(404);
+});
+
 test('POST /movies/:id/directors debe insertar los directores', async () => {
     const directors = await Director.create({
         "firstName": "Robert",
@@ -73,6 +78,11 @@ test('POST /movies/:id/directors debe insertar los directores', async () => {
     expect(res.body[0].firstName).toBe("Robert");
 });
 
+test('POST /movies/:id/directors con id incorrecto debe retornar 404', async () => {
+    const res = await request(app).post(`/movies/-1/directors`).send([]);
+    expect(res.status).toBe(404);
+});
+
 test('POST /movies/:id/genres debe insertar los generos', async () => {
     const genres = await Genre.create({
         name: "Drama"
@@ -86,6 +96,11 @@ test('POST /movies/:id/genres debe insertar los generos', async () => {
     expect(res.body).toBeInstanceOf(Array);
     expect(res.body.length).toBe(1);
     expect(res.body[0].name).toBe("Drama");
+});
+
+test('POST /movies/:id/genres con id incorrecto debe retornar 404', async () => {
+    const res = await request(app).post(`/movies/-1/genres`).send([]);
+    expect(res.status).toBe(404);
 });
 
 test('DELETE /movies/:id debe eliminar una pelicula', async () => {
